@@ -105,30 +105,32 @@ router.post('/player', function( req , res ) {
 })
 
 
-router.post('/booking/:name/:booking', function( req , res ) {
-    const name = req.params.name
-    let id = req.body.BookingNo
-    let flag = true
 
 
-    for(let i=0 ; i < ( player.length || booking.length ) ; i++){
-
-        if( name !== player[i].name ){
-            flag = false
-            res.send("error : Player doesn't Exist ")
-         }
-    
-        else if(id === booking[i].BookingNo){
-            flag = false
-            res.send ("error : Slote already Booked")
+router.post("/:playerName/bookings/:bookingId", function(req, res) {
+    let name= req.params.playerName
+    let id= req.params.bookingId
+    let value= req.body
+    for (let i=0;i<players.length; i++){
+        if(players[i].name == name){
+            let arr= players[i].bookings
+            if(arr.length===0){
+                arr.push(value)
+                res.send(players)
+            }else {
+                for (let j=0; j<arr.length; j++){
+                    if(arr[j].bookingNumber != id){
+                        arr.push(value)
+                        res.send(players)    
+                    }else{
+                        res.send("booking ID already exists")
+                    }
+                }
+            }
         }
     }
+    res.send("name does not exist")
 
-    if ( flag === true ){
-       // player.push(req.body)
-        res.send(playerForId)
-    }
 })
-
 
 module.exports = router
