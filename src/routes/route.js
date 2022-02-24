@@ -4,9 +4,9 @@ const router = express.Router();
 
 let players= [
     {
-        "name": "abhishek",
+        "name": "Radhika",
         "dob": "11/08/1998",
-        "gender": "male",
+        "gender": "female",
         "city": "noida",
         "sports": ["tennis"],
         "bookings": [{
