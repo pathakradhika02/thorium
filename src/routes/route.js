@@ -1,109 +1,107 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 
-const player = [ {
-    "name" : "Radhika" ,
-    DOB : "1/4/98" ,
-    Gender : "Female" ,
-    City : "BulandShahr" ,
-    Sports : [ "Swimming" ] ,
-    Booking : []
-} ,
-{
-    "name" : "Shivam" ,
-    DOB : "4/10/99" ,
-    Gender : "Male" ,
-    City : "BulandShahr" ,
-    Sports : [ "Cricket" ] ,
-    Booking : []
-} ,
-{
-    "name" : "Parul" ,
-    DOB : "10/6/99" ,
-    Gender : "Female" ,
-    City : "Meerut" ,
-    Sports : [ "Bedminton" ] ,
-    Booking : []
-} ,
-{
-    "name" : "Lovedeep" ,
-    DOB : "1/4/98" ,
-    Gender : "Male" ,
-    City : "Noida" ,
-    Sports : [ "Basketball" ] ,
-    Booking : []
-} ,
-{
-    "name" : "Charu" ,
-    DOB : "18/10/02" ,
-    Gender : "Female" ,
-    City : "BulandShahr" ,
-    Sports : [ "swimming" ] ,
-    Booking : []
-} ,
+let players= [
+    {
+        "name": "abhishek",
+        "dob": "11/08/1998",
+        "gender": "male",
+        "city": "noida",
+        "sports": ["tennis"],
+        "bookings": [{
+            "bookingNumber": "1",
+            "sportId": "1" ,
+            "centerId": "1" ,
+            "type": "private",
+            "slot": "16286598000000",
+            "bookedOn": "31/08/2021",
+            "bookedFor": "01/09/2021"
+            }]
+        },
+ {
+     "name": "manish",
+      "dob": "1/1/1995",
+      "gender": "male",
+      "city": "jalandhar",
+      "sports": ["swimming"],
+         "bookings": [{
+            "bookingNumber": "2",
+            "sportId": "2" ,
+            "centerId": "2" ,
+            "type": "private",
+            "slot": "16286598000001",
+            "bookedOn": "30/07/2021",
+            "bookedFor": "01/10/2021"
+            }]
+            },
+         {
+             "name": "satish",
+             "dob": "21/12/1995",
+             "gender": "male",
+             "city": "gurugram",
+             "sports": ["cricket"],
+             "bookings": [{
+                "bookingNumber": "3",
+                "sportId": "3" ,
+                "centerId": "3" ,
+                "type": "private",
+                "slot": "16286598000002",
+                "bookedOn": "31/06/2021",
+                "bookedFor": "11/07/2021"
+                }]
+                }, 
+                {
+                    "name": "piyush",
+                    "dob": "25/12/1995",
+                    "gender": "male",
+                    "city": "patiala",
+                    "sports": ["boxing"],
+                    "bookings": [{
+                        "bookingNumber": "4",
+                        "sportId": "4" ,
+                        "centerId": "4" ,
+                        "type": "private",
+                        "slot": "16286598000003",
+                        "bookedOn": "31/08/2021",
+                        "bookedFor": "01/09/2021"
+                        }]
+                    },
+                    {
+                        "name": "rakesh",
+                        "dob": "16/07/1997",
+                        "gender": "male",
+                        "city": "meerut",
+                        "sports": ["basketball"],
+                        "bookings": [{
+                            "bookingNumber": "5",
+                            "sportId": "5",
+                            "centerId": "5" ,
+                            "type": "private",
+                            "slot": "16286598000004",
+                            "bookedOn": "31/04/2021",
+                            "bookedFor": "03/07/2021"
+                            }]
+                        }
 ]
 
-
-const booking = [
-    {
-        "BookingNo" : "1" ,
-        SportID : "245654" ,
-        CenterId : "7865" ,
-        Type : "Private" ,
-        Slot : "346797654327" ,
-        BookedOn : "31/05/2020" 
-    } ,
-    {
-        "BookingNo" : "2" ,
-        SportID : "24538374" ,
-        CenterId : "7278395" ,
-        Type : "Private" ,
-        Slot : "346797654837327" ,
-        Bookedon : "03/09/2021" 
-    } ,
-    {
-        "BookingNo" : "3" ,
-        SportID : "2875654" ,
-        CenterId : "787266265" ,
-        Type : "Private" ,
-        Slot : "9289797654327" ,
-        Bookedon : "18/30/2021" 
-    } ,
-    {
-        "BookingNo" : "4" ,
-        SportID : "9282654" ,
-        CenterId : "78682725" ,
-        Type : "Private" ,
-        Slot : "8286327654327" ,
-        Bookedon : "09/08/2022" 
-    } ,
-    {
-        "BookingNo" : "5" ,
-        SportID : "245654" ,
-        CenterId : "7865" ,
-        Type : "Private" ,
-        Slot : "346797654327" ,
-        Bookedon : "18/09/2022" 
-    } ,
-]
-
-
-router.post('/player', function( req , res ) {
-    let newPlayer = req.body.name
-    let flag = true
-    for(let i=0 ; i<player.length ; i++){
-        if(newPlayer === player[i].name ){
-            flag = false 
-            res.send("error : Invalid Entry")
-         }
-     }
-     if( flag === true ){
-            player.push(req.body)
-            res.send( player )
-     }
+router.post("/players", function(req, res) {
+    let value= req.body.name
+    let flag= true
+    for (let i=0; i<players.length; i++){
+        if(players[i].name===value){
+            flag= false
+            res.send("Error player name already exist");
+        }
+    }
+            
+        
+        if(flag === true){
+            players.push(req.body);
+            res.send(players);
+        }
+    
 })
-
 
 
 
@@ -133,4 +131,4 @@ router.post("/:playerName/bookings/:bookingId", function(req, res) {
 
 })
 
-module.exports = router
+module.exports = router;
