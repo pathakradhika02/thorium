@@ -40,15 +40,15 @@ let persons= [
 
 
 router.post("/post-query", function (req, res) {
-    let age = req.query.votingAge
+    let newAge = req.query.votingAge
 
     for(let i=0 ; i<persons.length ; i++){
-        if(persons[i].age >= age){
+        if(persons[i].age >= newAge){
             persons[i].votingStatus = true
         }
     }
 
-    persons = persons.filter(per => per.age >= age )
+    persons = persons.filter(per => per.age >= newAge )
     res.send({ persons })
 })
 
