@@ -42,9 +42,8 @@ const getPerticularBook = async function (req, res) {
      res.send({msg: savedData})
 }
 
-const getXINRBooks = async function (req, res) {
-    let indPrice = bookModel.indianPrice
-    let savedData= await bookModel.find({ indPrice : {$in : [ "100INR" , "200INR" ,"500INR" ]}})
+const getXINRBooks = async function (req, res) 
+    let savedData= await bookModel.find({ "prices.indianPrice" : {$in : [ "100INR" , "200INR" ,"500INR" ]}})
     res.send({msg: savedData})
 }
 
