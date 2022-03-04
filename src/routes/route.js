@@ -13,4 +13,8 @@ router.post("/createAuthor", authorController.createAuthor)
 
 router.get("/getBooksData", bookController.getBooksData)
 
+router.put("/updateBookData", bookController.updateBookData )
+
+router.put("/updateBookByRating", bookController.updateBookByRating )
+
 module.exports = router;
