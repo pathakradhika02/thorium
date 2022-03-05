@@ -47,14 +47,14 @@ const updateBookData = async function (req, res) {
 
 
 const updateBookByRating = async function (req, res) {
-    let publisherId= await publisherModel.find({ publisherName:{$in:["HarperCollins", "Penguin"]} }).select({_id:1})
+    let authorrId= await authorModel.find({ rating :{$gt :3.5} }).select({_id:1})
   
     let arr=[]
     console.log(arr)
-    arr=publisherId.map(x => x._id)
+    arr=authorId.map(x => x._id)
     
-    let data= await bookModel.find({publisher:{$in:arr}} ).updateMany(
-      { ratings : { $gt : 3.5 }} ,
+    let data= await bookModel.updateMany(
+      {author:{$in:arr}} ,
       {$inc : {price : + 10 } },
       { new:true })  
     res.send(data)
