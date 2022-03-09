@@ -1,15 +1,9 @@
 const jwt = require("jsonwebtoken");
 
-const auth = async function ( req , res , next ) {
+const authorization = async function ( req , res , next ) {
     let isToken = req.headers["x-auth-token"]
-    if ( !isToken ) {
-        res.send({ status: false, msg: "token must be present" });
-    }
  
     let decodedToken = jwt.verify(isToken, "secuiretyKeyToCheckToken");
-    if ( !decodedToken ) {
-        res.send({ status: false, msg: "token is invalid" });
-    }
 
     let userId = req.params.userId
 
@@ -21,4 +15,4 @@ const auth = async function ( req , res , next ) {
 
 }
 
-module.exports.auth = auth
+module.exports.authorization = authorization
