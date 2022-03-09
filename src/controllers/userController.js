@@ -19,7 +19,7 @@ const loginUser = async function (req, res) {
       msg: "username or the password is not corerct",
     });
 
-  let token = jwt.sign({ userId: user._id.toString() }, "toCheckToken" );
+  let token = jwt.sign({ userId: user._id.toString() }, "secuiretyKeyToCheckToken" );
   res.setHeader("x-auth-token", token);
   res.send({ status: true, data: token });
 };
@@ -27,7 +27,6 @@ const loginUser = async function (req, res) {
 
 const getUserData = async function (req, res) {
   let userId = req.params.userId;
-  console.log(userId)
   let userDetails = await userModel.findById(userId);
 
   if (!userDetails) {

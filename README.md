@@ -35,5 +35,3 @@ If present, check that the token is valid.
 - Once, all the apis are working fine, move the authentication related code in a middleware called auth.js
 - Add this middleware at route level in the routes where applicable.
 
-
-
