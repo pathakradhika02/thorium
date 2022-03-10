@@ -1,68 +1,109 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
-const createUser = async function (req , res) {
-  let data = req.body;
-  let savedData = await userModel.create(data);
-  res.send({ msg: savedData });
+const createUser = async function (req, res) {
+  try {
+    let data = req.body
+    if (Object.keys(data).length != 0) {
+      let savedData = await BookModel.create(data)
+      res.status(401).send({ msg: savedData })
+    }
+    else res.status(400).send({ msg: "BAD REQUEST" })
+  }
+  catch (error) {
+    console.log("This is the error :", err.message)
+    res.status(500).send({ msg: "Error", error: error.message })
+  }
+
 };
 
 
 const loginUser = async function (req, res) {
-  let userName = req.body.emailId;
-  let password = req.body.password;
+  try {
+    let userName = req.body.emailId;
+    let password = req.body.password;
 
-  let user = await userModel.findOne({ emailId: userName, password: password });
-  if (!user)
-    return res.send({
-      status: false,
-      msg: "username or the password is not corerct",
-    });
+    if (!userName) res.status(400).send({ error: "userName must be present in request body" })
+    if (!password) res.status(400).send({ error: "password must be present in request body" })
 
-  let token = jwt.sign({ userId: user._id.toString() }, "secuiretyKeyToCheckToken" );
-  res.setHeader("x-auth-token", token);
-  res.send({ status: true, data: token });
+    let user = await userModel.findOne({ emailId: userName, password: password });
+    if (!user)
+      return res.status(400).send({
+        status: false,
+        msg: "username or the password is not corerct",
+      });
+
+    let token = jwt.sign({ userId: user._id.toString() }, "secuiretyKeyToCheckToken");
+   
+    res.status(200).send({ status: true, data: token });
+  }
+  catch (error) {
+    console.log(error.message)
+    res.status(500).send({ error: error.message })
+  }
 };
 
 
 const getUserData = async function (req, res) {
-  let userId = req.params.userId;
-  let userDetails = await userModel.findById(userId);
+  try {
+    let userId = req.params.userId;
+    if (!userId) res.status(400).send({ error: "userId must be present in params" })
 
-  if (!userDetails) {
-    return res.send({ status: false, msg: "user doesn't exists" });
+    let userDetails = await userModel.findById(userId);
+
+    if (!userDetails) {
+      return res.send({ status: false, msg: "user doesn't exists" });
+    }
+
+    res.send({ status: true, data: userDetails });
   }
-
-  res.send({ status: true, data: userDetails });
+  catch (error) {
+    console.log(error.message)
+    res.status(500).send({ error: error.message })
+  }
 };
 
 
 const updateUser = async function (req, res) {
+  try {
+    let userId = req.params.userId;
+    let data = req.body
 
-  let userId = req.params.userId;
-  let data = req.body
-  let user = await userModel.findOneAndUpdate({ _id : userId } , {  });
+    if (!userId) res.status(400).send({ error: "userId must be present in params" })
+    if (!data) res.status(400).send({ error: "Some data to update must be present in body" })
 
-  if (!user) {
-    return res.send("No such user exists");
+    let user = await userModel.findOneAndUpdate({ _id: userId }, {});
+
+    if (!user) {
+      return res.status(400).send("No such user exists");
+    }
+
+    let userData = req.body;
+    let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData, { new: true });
+    res.status(200).send({ status: true, data: updatedUser });
   }
-
-  let userData = req.body;
-  let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData , { new : true });
-  res.send({ status: true , data: updatedUser });
+  catch (error) {
+    console.log(error.message)
+    res.status(500).send({ error: error.message })
+  }
 
 };
 
 
-const deleteUser = async function ( req , res ) {
-  let userId = req.params.userId
+const deleteUser = async function (req, res) {
+  try {
+    let userId = req.params.userId
 
-  console.log(userId)
-  const user = await userModel.findOneAndUpdate({ _id : userId } , { $set : { isDelete : true }} , { new : true})
+    if (!userId) res.status(400).send({ error: "userId must be present in params" })
+    const user = await userModel.findOneAndUpdate({ _id: userId }, { $set: { isDelete: true } }, { new: true })
 
-  console.log(user)
+    res.status(200).send({ deletedUser: user })
+  }
+  catch (error) {
+    console.log(error.message)
+    res.status(500).send({ error : error.message})
+  }
 
-  res.send({ deletedUser : user})
 
 }
 

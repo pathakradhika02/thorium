@@ -1,17 +1,23 @@
 const jwt = require("jsonwebtoken");
 
-const authorization = async function ( req , res , next ) {
-    let isToken = req.headers["x-auth-token"]
- 
-    let decodedToken = jwt.verify(isToken, "secuiretyKeyToCheckToken");
+const authorization = async function (req, res, next) {
+    try{
+        let isToken = req.headers["x-auth-token"]
 
-    let userId = req.params.userId
+        let decodedToken = jwt.verify(isToken, "secuiretyKeyToCheckToken");
 
-    if ( decodedToken.userId != userId ) {
-        res.send({ error : " LogedIn user is not authorize to change with requested userid"})
+        let userId = req.params.userId
+
+        if (decodedToken.userId != userId) {
+            res.status(403).send({ error: " LogedIn user is not authorize to change with requested userid" })
+        }
+
+        next();
     }
-    
-    next();
+    catch (error){
+        console.log(error.message)
+        res.status(500).send({ error : error.message})
+    }
 
 }
 
