@@ -6,7 +6,7 @@ const createUser = async function (req, res) {
     let data = req.body
     if (Object.keys(data).length != 0) {
       let savedData = await BookModel.create(data)
-      res.status(401).send({ msg: savedData })
+      res.status(400).send({ msg: savedData })
     }
     else res.status(400).send({ msg: "BAD REQUEST" })
   }
