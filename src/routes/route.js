@@ -15,13 +15,13 @@ router.post("/users", userController.createUser  )
 router.post("/login", userController.loginUser)
 
 //  fetch data from DB
-router.get("/users/:userId", authenticationMW.authentication, authorizationMW.authorization , userController.getUserData)
+router.get("/users/:userId", authenticationMW.authentication, userController.getUserData)
 
 //  Update data 
-router.put("/users/:userId", authenticationMW.authentication, authorizationMW.authorization , userController.updateUser)
+router.put("/users/:userId", authenticationMW.authentication , userController.updateUser)
 
 //  delete data
-router.delete("/users/:userId",authenticationMW.authentication, authorizationMW.authorization , userController.deleteUser)
+router.delete("/users/:userId",authenticationMW.authentication, userController.deleteUser)
 
 
 module.exports = router;
