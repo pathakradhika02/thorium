@@ -52,7 +52,7 @@ const getUserData = async function (req, res) {
     let userDetails = await userModel.findById(userId);
 
     if (!userDetails) {
-      return res.send({ status: false, msg: "user doesn't exists" });
+      return res.status(200).send({ status: false, msg: "user doesn't exists" });
     }
 
     res.send({ status: true, data: userDetails });
@@ -75,7 +75,7 @@ const updateUser = async function (req, res) {
     let user = await userModel.findOneAndUpdate({ _id: userId }, {});
 
     if (!user) {
-      return res.status(400).send("No such user exists");
+      return res.status(200).send("No such user exists");
     }
 
     let userData = req.body;
