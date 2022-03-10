@@ -4,7 +4,7 @@ const authentication = async function (req, res, next) {
     try{
         let isToken = req.headers["x-auth-token"]
         if (!isToken) {
-            res.status(400).send({ status: false, msg: "token must be present" });
+            return res.status(400).send({ status: false, msg: "token must be present" });
         }
 
         let decodedToken = jwt.verify(isToken, "secuiretyKeyToCheckToken");
@@ -16,7 +16,7 @@ const authentication = async function (req, res, next) {
     }
     catch (error){
         console.log(error.message)
-        res.status(500).send({ error : error.message})
+        return res.status(500).send({ error : error.message})
     }
 }
 

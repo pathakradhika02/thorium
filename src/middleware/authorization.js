@@ -9,14 +9,14 @@ const authorization = async function (req, res, next) {
         let userId = req.params.userId
 
         if (decodedToken.userId != userId) {
-            res.status(403).send({ error: " LogedIn user is not authorize to change with requested userid" })
+          return  res.status(403).send({ error: " LogedIn user is not authorize to change with requested userid" })
         }
 
         next();
     }
     catch (error){
         console.log(error.message)
-        res.status(500).send({ error : error.message})
+        return res.status(500).send({ error : error.message})
     }
 
 }
