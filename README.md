@@ -46,3 +46,19 @@ Create API's to do each of the following:
                     "url": "https://i.imgflip.com/5mvxax.jpg",
                     "page_url": "https://imgflip.com/i/5mvxax"
                 }
+
+
+
+
+
+
+sort(a.temp - b.temp)
+sort(function(a,b) {return a.temp - b.temp})
+
+
+
+https://cdn-apico-vin.in/api
+
+
+- how we have progressed in the last 1 week - Confidence | discipline | skills
+- what you are going to do in next 1 week
