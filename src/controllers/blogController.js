@@ -44,6 +44,7 @@ const getBlogs = async function( req , res ) {
 const updateBlog= async function (req, res) {
     try {
     let data = req.body
+    let id = req.params.blogId
     if ( !data )  return res.status(400).send({ error : "Enter some data to update"})     
 
     const timeDate = moment()
@@ -63,6 +64,7 @@ const updateBlog= async function (req, res) {
 
 const deleteBlogByPath = async function (req, res) {
     try {
+        let blogId = req.params.blogId
         const timeDate = moment()
 
         const dataforUpdation = { isDeleted : true , deletedAt : timeDate}
