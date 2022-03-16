@@ -1,11 +1,28 @@
 const authorModel = require("../models/authorModel")
 const jwt = require("jsonwebtoken")
 
+const isValid= function(value){
+  if( typeof (value)=== 'undefined' || typeof (value)=== 'null'){
+      return false
+  } 
+  if(value.trim().length==0){
+      return false
+  } if(typeof (value) === 'string' && value.trim().length >0 ){
+      return true
+  }
+}
+
 const createAuthor = async function (req, res) {
   try {
     const data = req.body
 
     if (!Object.keys(data).length > 0) return res.status(400).send({ error: "Please enter data" })
+
+    const{password} = data
+    if( !isValid(password) ){
+        return res.status(400).send({ status : false, msg: 'please provide data'})
+    }
+
     const createdauthor = await authorModel.create(data)
     res.status(201).send({ data: createdauthor })
   }

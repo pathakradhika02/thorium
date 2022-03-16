@@ -2,6 +2,16 @@ const { count } = require("console")
 const blogModel = require("../models/blogModel")
 const authorModel = require("../models/authorModel")
 
+const isValid= function(value){
+    if( typeof (value)=== 'undefined' || typeof (value)=== 'null'){
+        return false
+    } 
+    if(value.trim().length==0){
+        return false
+    } if(typeof (value) === 'string' && value.trim().length >0 ){
+        return true
+    }
+}
 
 const createBlog = async function (req, res) {
     try {
@@ -9,12 +19,17 @@ const createBlog = async function (req, res) {
         const id = req.body.authorId
         if (!Object.keys(data).length > 0) return res.status(400).send({ error: "Please enter data" })
 
+        const{title} = data
+        if( !isValid(title,) ){
+            return res.status(400).send({ status : false, msg: 'please provide data'})
+        }
+
         const findAuthor = await authorModel.find({ _id: id })
 
         if (!findAuthor.length > 0) return res.status(400).send("error : Please enter valid authorId")
 
         const createdBlog = await blogModel.create(data)
-        res.status(201).send({ Blog: createdBlog })
+        return res.status(201).send({ Blog: createdBlog })
     }
     catch (err) {
         console.log(err)
