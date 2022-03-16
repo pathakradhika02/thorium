@@ -17,7 +17,7 @@ router.post("/createAuthor", authorController.createAuthor)
 router.post("/createBlog",mw.authentication, blogController.createBlog)
 
 //  delete blog by query
-router.delete("/deleteBlogByQuery",mw.authentication,mw.authorization, blogController.deleteBlogByQuery)
+router.delete("/deleteBlog",mw.authentication,mw.authorization, blogController.deleteBlogByQuery)
 
 // delete blog by path params
 router.delete("/deleteBlog/:blogId",mw.authentication,mw.authorization, blogController.deleteBlogByPath)

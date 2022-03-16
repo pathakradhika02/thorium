@@ -85,9 +85,10 @@ const deleteBlogByPath = async function (req, res) {
 
 const deleteBlogByQuery = async function (req, res) {
     try {
-        const data = req.query
-
+        let data = req.query
         if (!data) return res.status(400).send({ error: "Please enter some data to campare" })
+
+        data = { ...data }
 
         const timeDate = moment()
         const dataforUpdation = { isDeleted : true , deletedAt : timeDate}
