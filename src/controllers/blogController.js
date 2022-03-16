@@ -7,7 +7,7 @@ const createBlog = async function (req, res) {
     try {
         const data = req.body
         const id = req.body.authorId
-        if (!Object.keys(data).length > 0) return res.send({ error: "Please enter data" })
+        if (!Object.keys(data).length > 0) return res.status(400).send({ error: "Please enter data" })
 
         const findAuthor = await authorModel.find({ _id: id })
 
@@ -53,10 +53,6 @@ const updateBlog = async function (req, res) {
         let blog = await blogModel.findById(blogId)
         if (!blog) return res.status(404).send({ status: false, msg: "Blog does not exists" })
 
-        // checking is blog is already deleted
-        let isDeleted = Object.keys(blog).find(isDeleted => blog[isDeleted] === true)
-        if (isDeleted == true) return res.status(404).send({ status: false, msg: "Blog is already deleted" })
-
         // data for updation
         let title = req.body.title
         let body = req.body.body
@@ -91,9 +87,9 @@ const deleteBlogByPath = async function (req, res) {
 
         // if blog is already deleted
         let isDeleted = await blogModel.findOne({ _id : blogId , isDeleted : true})
-        if ( isDeleted ) return res.status(404).send({ status: false, msg: "Blog is already deleted" })
+        if ( isDeleted ) return res.status(400).send({ status: false, msg: "Blog is already deleted" })
 
-        // deletinh blog
+        // deleting blog
         let deletedBlog = await blogModel.findOneAndUpdate({ _id: blogId },
             { $set: { isDeleted: true, deletedAt: new Date() } }, { new: true })
 
@@ -112,7 +108,7 @@ const deleteBlogByQuery = async function (req, res) {
 
         // checking if blog is already deleted
         let isDeleted = await blogModel.findOne({ _id : blogId , isDeleted : true})
-        if ( isDeleted ) return res.status(404).send({ status: false, msg: "Blog is already deleted" })
+        if ( isDeleted ) return res.status(400).send({ status: false, msg: "Blog is already deleted" })
 
         // deleting blog
         const deletedBlog = await blogModel.updateMany(data, { isDeleted: true, deletedAt: new Date() }, { new: true })
