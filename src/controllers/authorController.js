@@ -16,7 +16,7 @@ const createAuthor = async function (req, res) {
   try {
     const data = req.body
 
-    if (!Object.keys(data).length > 0) return res.status(400).send({ error: "Please enter data" })
+    if (!Object.keys(data).length > 0) return res.status(400).send({ error: "Please enter password" })
 
     const{password} = data
     if( !isValid(password) ){

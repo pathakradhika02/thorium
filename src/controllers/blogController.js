@@ -17,7 +17,7 @@ const createBlog = async function (req, res) {
     try {
         const data = req.body
         const id = req.body.authorId
-        if (!Object.keys(data).length > 0) return res.status(400).send({ error: "Please enter data" })
+        if (!Object.keys(data).length > 0) return res.status(400).send({ error: "Please enter title" })
 
         const{title} = data
         if( !isValid(title,) ){
