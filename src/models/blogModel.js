@@ -25,12 +25,18 @@ const blogSchema = new mongoose.Schema( {
         type : Boolean ,
         default : false
     } ,
-    deletedAt : Date ,
+    deletedAt : {
+        type : Date ,
+        default : ""
+    },
     isPublished : { 
         type : Boolean ,
         default : false
     } ,
-    deletedAt : Date
+    publishedAt : { 
+        type : Date ,
+        default :""
+    }
  } , { timestamps: true });
 
 module.exports = mongoose.model('blog', blogSchema) 
