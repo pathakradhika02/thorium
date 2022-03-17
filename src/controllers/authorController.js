@@ -16,11 +16,11 @@ const createAuthor = async function (req, res) {
   try {
     const data = req.body
 
-    if (!Object.keys(data).length > 0) return res.status(400).send({ error: "Please enter password" })
+    if (!Object.keys(data).length > 0) return res.status(400).send({ error: "Please enter data" })
 
     const{password} = data
     if( !isValid(password) ){
-        return res.status(400).send({ status : false, msg: 'please provide data'})
+        return res.status(400).send({ status : false, msg: 'please provide password'})
     }
 
     const createdauthor = await authorModel.create(data)
