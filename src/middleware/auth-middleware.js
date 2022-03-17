@@ -40,7 +40,7 @@ const authorization = async function (req, res, next) {
 
         else {
             let authorId = req.query.authorId
-            if ( !authorId )  return res.status(400).send({error : "Please, enter authorId or blogId"})
+            if ( !authorId )  return res.status(400).send({error : "Please, enter authorId"})
             if (decodedtoken.authorId != authorId) return res.status(403).send({ status: false, msg: "You haven't right to perform this task" })
         }
         next()
